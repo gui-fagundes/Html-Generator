@@ -149,6 +149,19 @@ function buildFooter() {
   document.querySelector('#generatedFooter').appendChild(footer);
 }
 
+// === Export HTML ===
+function exportGeneratedPage(){
+    // Ensure sections are up‑to‑date
+    buildHeader();buildMenu();buildGallery();buildForm();buildFooter();
+    // Clone only the generatedPage subtree
+    const page = document.querySelector('#generatedPage').cloneNode(true);
+    // Wrap in basic html boilerplate + Tailwind CDN
+    const html = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><script src=\"https://cdn.tailwindcss.com\"></script><title>Pagina Exportada</title></head><body class=\"p-4\">${page.innerHTML}</body></html>`;
+    const blob = new Blob([html],{type:'text/html'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='pagina-gerada.html';a.click();
+  }
+
+
 /* === Event Wiring === */
 document.querySelector('#headerText').addEventListener('input', buildHeader);
 document.querySelector('#headerTextColor').addEventListener('input', buildHeader);

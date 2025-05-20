@@ -3,10 +3,12 @@
 function buildHeader() {
   const text = document.querySelector("#headerText").value.trim();
   const color = document.querySelector("#headerTextColor").value;
+  const bgColor = document.querySelector("#headerBgColor").value;
   const iconF = document.querySelector("#headerIcon").files[0];
 
   const header = document.createElement("header");
   header.className = "flex items-center gap-4 p-4 shadow w-full";
+  header.style.background = bgColor;
 
   if (iconF) {
     const img = document.createElement("img");
@@ -30,6 +32,7 @@ function buildHeader() {
 
 const links = [];
 function addLink() {
+  if(links.length > 5) return;
   const txt = document.querySelector("#linkText").value.trim();
   if (!txt) return;
   const url = "";
@@ -188,6 +191,7 @@ document.querySelector("#headerText").addEventListener("input", buildHeader);
 document
   .querySelector("#headerTextColor")
   .addEventListener("input", buildHeader);
+document.querySelector("#headerBgColor").addEventListener("input", buildHeader);
 document.querySelector("#headerIcon").addEventListener("change", buildHeader);
 
 // Menu

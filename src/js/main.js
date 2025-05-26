@@ -149,7 +149,9 @@ function buildForm() {
 // Footer Logic
 const footerContainer = document.getElementById("generatedFooter");
 const footerSelect = document.getElementById("footerSelect");
-const footerColumnInput = document.querySelector('input[placeholder="Titulo da Coluna"]');
+const footerColumnInput = document.querySelector(
+  'input[placeholder="Titulo da Coluna"]'
+);
 const addColumnButton = footerColumnInput.nextElementSibling;
 
 const footerColumns = {};
@@ -188,16 +190,21 @@ addColumnButton.addEventListener("click", () => {
   footerColumnInput.value = "";
 });
 
-footerSelect.insertAdjacentHTML("afterend", `
+footerSelect.insertAdjacentHTML(
+  "afterend",
+  `
   <div class="flex gap-2 mt-2">
     <input type="text" id="footerSubItemInput" class="border-1 border-black rounded-full text-center px-2" placeholder="Texto do item" />
     <button id="addSubItemButton" class="px-4 py-2 rounded-md border-1 cursor-pointer">Adicionar Item</button>
   </div>
-`);
+`
+);
 
 document.getElementById("addSubItemButton").addEventListener("click", () => {
   const selectedColumnId = footerSelect.value;
-  const subItemText = document.getElementById("footerSubItemInput").value.trim();
+  const subItemText = document
+    .getElementById("footerSubItemInput")
+    .value.trim();
   if (!selectedColumnId || !subItemText) return;
 
   const column = document.getElementById(selectedColumnId);
@@ -229,19 +236,81 @@ function exportGeneratedPage() {
 }
 
 // Event Listeners
-document.querySelector("#bodyBgColor").addEventListener("input", updatePageBackground);
+document
+  .querySelector("#bodyBgColor")
+  .addEventListener("input", updatePageBackground);
 document.querySelector("#headerText").addEventListener("input", buildHeader);
-document.querySelector("#headerTextColor").addEventListener("input", buildHeader);
+document
+  .querySelector("#headerTextColor")
+  .addEventListener("input", buildHeader);
 document.querySelector("#headerBgColor").addEventListener("input", buildHeader);
 document.querySelector("#headerIcon").addEventListener("change", buildHeader);
-document.querySelector("#linkText").nextElementSibling.addEventListener("click", addLink);
+document
+  .querySelector("#linkText")
+  .nextElementSibling.addEventListener("click", addLink);
 document.querySelector("#menuLinkColor").addEventListener("input", buildMenu);
-document.querySelector("#galleryImage").addEventListener("change", addGalleryImage);
+document
+  .querySelector("#galleryImage")
+  .addEventListener("change", addGalleryImage);
 document.querySelector("#formTitle").addEventListener("input", buildForm);
 document.querySelector("#formInputType").addEventListener("change", buildForm);
-document.querySelector("#formInputTitle").nextElementSibling.addEventListener("click", addFormInput);
-document.querySelector("#formSubmitButton").addEventListener("click", addSubmitBtn);
+document
+  .querySelector("#formInputTitle")
+  .nextElementSibling.addEventListener("click", addFormInput);
+document
+  .querySelector("#formSubmitButton")
+  .addEventListener("click", addSubmitBtn);
 
+// LocalStorage Logic
+const STORAGE_KEY = "paginaHTMLGeradaW3C";
+
+document.getElementById("saveLocal").addEventListener("click", () => {
+  buildHeader();
+  buildMenu();
+  buildGallery();
+  buildForm();
+  updatePageBackground();
+
+  const page = document.querySelector("#generatedPage").cloneNode(true);
+
+  const htmlContent = `
+  <!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página Gerada</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="p-4">
+  ${page.innerHTML}
+  </body>
+  </html>`.trim();
+
+  localStorage.setItem(STORAGE_KEY, htmlContent);
+  alert("Código HTML salvo no localStorage!");
+});
+
+document.getElementById("loadLocal").addEventListener("click", () => {
+  const html = localStorage.getItem(STORAGE_KEY);
+  if (!html) {
+    alert("Nenhum código HTML encontrado no localStorage.");
+    return;
+  }
+
+  const preview = document.querySelector("#generatedPage");
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  const generatedContent = doc.body.innerHTML;
+
+  preview.innerHTML = generatedContent;
+  alert("Página carregada do localStorage!");
+});
+
+document.getElementById("clearLocal").addEventListener("click", () => {
+  localStorage.removeItem(STORAGE_KEY);
+  alert("LocalStorage limpo!");
+});
 // Initial Build
 buildHeader();
 buildMenu();

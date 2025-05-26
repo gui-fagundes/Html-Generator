@@ -161,9 +161,16 @@
       </div>
       <!-- Export Page -->
       <div class="flex flex-col pl-2 gap-2">
-        <h1 class="text-2xl text-black italic">Exports :</h1>
-        <button class="px-4 rounded-md border-1 border-black" onclick=exportGeneratedPage() >Export Generated Page</button>
+        <h1 class="text-2xl text-black italic">Exports / LocalStorage :</h1>
+        <button class="px-4 rounded-md border-1 border-black cursor-pointer" onclick=exportGeneratedPage() >Export Generated Page</button>
+
+        <div class="flex gap-2">
+          <button id="saveLocal" class="border-1 border-black cursor-pointer rounded-md px-2">Salvar em LocalStorage</button>
+          <button id="loadLocal" class="border-1 border-black cursor-pointer rounded-md px-2">Carregar LocalStorage</button>
+          <button id="clearLocal" class="border-1 border-black cursor-pointer rounded-md px-2">Limpar LocalStorage</button>
+        </div>
       </div>
+
     </section>
     <section id="generatedPage"
     class="border-1 w-full px-0 my-3 rounded-md flex flex-col gap-3">

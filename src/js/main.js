@@ -1,5 +1,11 @@
-// Header builder
+// Generic Page Logic
+function updatePageBackground() {
+  const color = document.querySelector("#bodyBgColor").value;
+  const page = document.querySelector("#generatedPage");
+  page.style.backgroundColor = color;
+}
 
+// Header Logic
 function buildHeader() {
   const text = document.querySelector("#headerText").value.trim();
   const color = document.querySelector("#headerTextColor").value;
@@ -29,10 +35,9 @@ function buildHeader() {
 }
 
 // Menu Logic
-
 const links = [];
 function addLink() {
-  if(links.length > 5) return;
+  if (links.length > 5) return;
   const txt = document.querySelector("#linkText").value.trim();
   if (!txt) return;
   const url = "";
@@ -43,18 +48,8 @@ function addLink() {
 
 function buildMenu() {
   const color = document.querySelector("#menuLinkColor").value;
-  const imgF = document.querySelector("#menuImage").files[0];
-
   const container = document.createElement("div");
   container.className = "flex flex-col items-center gap-2 p-4";
-
-  if (imgF) {
-    const img = document.createElement("img");
-    img.src = URL.createObjectURL(imgF);
-    img.alt = "Menu Image";
-    img.className = "w-32 h-32 object-cover";
-    container.appendChild(img);
-  }
 
   const nav = document.createElement("nav");
   nav.className = "flex gap-4 flex-wrap justify-center";
@@ -78,13 +73,14 @@ function addGalleryImage(e) {
   galleryImgs.push(...e.target.files);
   buildGallery();
 }
+
 function buildGallery() {
-  if(galleryImgs.length == 0) return;
+  if (galleryImgs.length == 0) return;
   const grid = document.createElement("div");
   grid.className = "grid grid-cols-2 md:grid-cols-4 gap-2";
   const galleryTitle = document.createElement("h1");
   galleryTitle.innerHTML = "Galeria";
-  galleryTitle.className = "col-span-4 text-center"
+  galleryTitle.className = "col-span-4 text-center";
   grid.appendChild(galleryTitle);
   galleryImgs.forEach((f) => {
     const img = document.createElement("img");
@@ -116,8 +112,7 @@ function addSubmitBtn() {
 
 function buildForm() {
   if (document.querySelector("#formTitle").value.trim() == "") return;
-  const titleTxt =
-    document.querySelector("#formTitle").value.trim() || "";
+  const titleTxt = document.querySelector("#formTitle").value.trim() || "";
   const form = document.createElement("form");
   form.className = "flex flex-col gap-4 p-4 border rounded";
 
@@ -151,32 +146,81 @@ function buildForm() {
   document.querySelector("#generatedForm").appendChild(form);
 }
 
-/* === Footer === */
-function buildFooter() {
-  const msg =
-    document.querySelector("#footerCopyright").value.trim() ||
-    "© 2025 All Rights Reserved";
-  const footer = document.createElement("footer");
-  footer.className = "text-center p-4 bg-gray-200";
-  footer.textContent = msg;
-  document.querySelector("#generatedFooter").innerHTML = "";
-  document.querySelector("#generatedFooter").appendChild(footer);
-}
+// Footer Logic
+const footerContainer = document.getElementById("generatedFooter");
+const footerSelect = document.getElementById("footerSelect");
+const footerColumnInput = document.querySelector('input[placeholder="Titulo da Coluna"]');
+const addColumnButton = footerColumnInput.nextElementSibling;
+
+const footerColumns = {};
+let columnCount = 0;
+
+addColumnButton.addEventListener("click", () => {
+  const columnTitle = footerColumnInput.value.trim();
+  if (!columnTitle) return;
+
+  const columnId = `footer-column-${columnCount++}`;
+  footerColumns[columnId] = {
+    title: columnTitle,
+    items: [],
+  };
+
+  const columnDiv = document.createElement("div");
+  columnDiv.className = "footer-column p-4";
+  columnDiv.id = columnId;
+
+  const columnHeader = document.createElement("h2");
+  columnHeader.textContent = columnTitle;
+  columnHeader.className = "font-bold mb-2";
+
+  const itemList = document.createElement("ul");
+  itemList.className = "footer-items list-disc pl-4 list-none";
+
+  columnDiv.appendChild(columnHeader);
+  columnDiv.appendChild(itemList);
+  footerContainer.appendChild(columnDiv);
+
+  const option = document.createElement("option");
+  option.value = columnId;
+  option.textContent = columnTitle;
+  footerSelect.appendChild(option);
+
+  footerColumnInput.value = "";
+});
+
+footerSelect.insertAdjacentHTML("afterend", `
+  <div class="flex gap-2 mt-2">
+    <input type="text" id="footerSubItemInput" class="border-1 border-black rounded-full text-center px-2" placeholder="Texto do item" />
+    <button id="addSubItemButton" class="px-4 py-2 rounded-md border-1 cursor-pointer">Adicionar Item</button>
+  </div>
+`);
+
+document.getElementById("addSubItemButton").addEventListener("click", () => {
+  const selectedColumnId = footerSelect.value;
+  const subItemText = document.getElementById("footerSubItemInput").value.trim();
+  if (!selectedColumnId || !subItemText) return;
+
+  const column = document.getElementById(selectedColumnId);
+  const ul = column.querySelector("ul");
+  const li = document.createElement("li");
+  li.textContent = subItemText;
+  ul.appendChild(li);
+
+  footerColumns[selectedColumnId].items.push(subItemText);
+  document.getElementById("footerSubItemInput").value = "";
+});
 
 // Export HTML
 function exportGeneratedPage() {
-  // Ensure components are built
   buildHeader();
   buildMenu();
   buildGallery();
   buildForm();
-  buildFooter();
+  updatePageBackground();
 
-  // Clone generated page portion of html
   const page = document.querySelector("#generatedPage").cloneNode(true);
 
-  // Wrap in basic html boilerplate + Tailwind CDN
-  const html = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><script src=\"https://cdn.tailwindcss.com\"></script><title>Pagina Exportada</title></head><body class=\"p-4\">${page.innerHTML}</body></html>`;
+  const html = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><script src="https://cdn.tailwindcss.com"></script><title>Pagina Exportada</title></head><body class="p-4">${page.innerHTML}</body></html>`;
   const blob = new Blob([html], { type: "text/html" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
@@ -185,45 +229,22 @@ function exportGeneratedPage() {
 }
 
 // Event Listeners
-
-// Header
+document.querySelector("#bodyBgColor").addEventListener("input", updatePageBackground);
 document.querySelector("#headerText").addEventListener("input", buildHeader);
-document
-  .querySelector("#headerTextColor")
-  .addEventListener("input", buildHeader);
+document.querySelector("#headerTextColor").addEventListener("input", buildHeader);
 document.querySelector("#headerBgColor").addEventListener("input", buildHeader);
 document.querySelector("#headerIcon").addEventListener("change", buildHeader);
-
-// Menu
-document
-  .querySelector("#linkText")
-  .nextElementSibling.addEventListener("click", addLink);
+document.querySelector("#linkText").nextElementSibling.addEventListener("click", addLink);
 document.querySelector("#menuLinkColor").addEventListener("input", buildMenu);
-document.querySelector("#menuImage").addEventListener("change", buildMenu);
-
-// Gallery
-document
-  .querySelector("#galleryImage")
-  .addEventListener("change", addGalleryImage);
-
-// Form
+document.querySelector("#galleryImage").addEventListener("change", addGalleryImage);
 document.querySelector("#formTitle").addEventListener("input", buildForm);
 document.querySelector("#formInputType").addEventListener("change", buildForm);
-document
-  .querySelector("#formInputTitle")
-  .nextElementSibling.addEventListener("click", addFormInput);
-document
-  .querySelector("#formSubmitButton")
-  .addEventListener("click", addSubmitBtn);
+document.querySelector("#formInputTitle").nextElementSibling.addEventListener("click", addFormInput);
+document.querySelector("#formSubmitButton").addEventListener("click", addSubmitBtn);
 
-// Footer
-document
-  .querySelector("#footerCopyright")
-  .addEventListener("input", buildFooter);
-
-// Build Inicial
+// Initial Build
 buildHeader();
 buildMenu();
 buildGallery();
 buildForm();
-buildFooter();
+updatePageBackground();

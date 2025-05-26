@@ -7,11 +7,19 @@
     <script src="./src/js/main.js" defer></script>
     <title>Gerador HTML</title>
   </head>
-  <body class="px-4 flex max-w-screen content-center justify-between gap-2">
+  <body class="px-4 flex flex-col md:flex-row max-w-screen content-center justify-between gap-2">
     <section
       class="flex flex-col justify-evenly content-evenly my-3 gap-6 px-4 py-4 border-1  rounded-md"
       id="pageConfigs"
     >
+    <!-- Body Configs -->
+     <div class="flex flex-col pl-2 gap-2">
+      <h1 class="text-2xl text-black italic">Body Configs :</h1>
+      <div class="flex gap-2">
+        <label for="bodyBgColor">Page Background</label>
+        <input type="color" id="bodyBgColor" value="#FFFFFF" class="">
+      </div>
+     </div>
       <!-- Header Configs -->
       <div class="flex flex-col pl-2 gap-2">
         <h1 class="text-2xl text-black italic">Header Configs :</h1>
@@ -22,6 +30,7 @@
             id="headerText"
             class="border-1 border-black rounded-full px-10 text-center"
             placeholder="Texto do header"
+            maxlength="30"
           />
         </div>
         <div class="flex gap-2 pl-1">
@@ -42,9 +51,9 @@
             type="file"
             id="headerIcon"
             class="invisible"
-            placeholder="Upload Image"
           />
         </div>
+        <hr>
       </div>
       <!-- Menu Configs -->
       <div class="flex flex-col pl-2 gap-2">
@@ -63,16 +72,9 @@
         </div>
         <div class="flex gap-2 pl-1">
           <label for="menuLinkColor">Menu Links Color</label>
-          <input type="color" id="menuLinkColor" value="#fff" class="" />
+          <input type="color" id="menuLinkColor" value="#000000" class="" />
         </div>
-        <div class="flex flex-col gap-2 pl-1">
-          <label
-            for="menuImage"
-            class="cursor-pointer rounded-md border-1 border-black font-bold py-2 px-4 text-sm text-center"
-            >Image upload</label
-          >
-          <input type="file" id="menuImage" class="invisible" />
-        </div>
+        <hr>
       </div>
       <!-- Gallery Configs -->
       <div class="flex flex-col pl-2 gap-2">
@@ -87,6 +89,7 @@
             <input type="file" id="galleryImage" class="invisible" />
           </div>
         </div>
+        <hr>
       </div>
 
       <!-- Form Configs -->
@@ -101,8 +104,9 @@
             placeholder="Titulo do Form"
           />
         </div>
-        <div class="flex gap-2">
-          <label for="formInput">Form Input: </label>
+        <div class="flex flex-col gap-2">
+          <h1>Form Input: </h1>
+          <div class="flex gap-2">
           <select
             name="Input Type"
             id="formInputType"
@@ -123,29 +127,37 @@
             class="cursor-pointer border-black border-1 rounded-md px-4 text-center"
           >
             Add Input
-          </button>
+          </button>            
+          </div>
+
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 justify-center">
           <button
             id="formSubmitButton"
-            class="cursor-pointer border-1 border-black rounded-md text-center px-4"
+            class="cursor-pointer border-1 border-black rounded-md text-center px-4 my-3"
           >
             Add Submit Button
           </button>
         </div>
+        <hr>
       </div>
       <!-- Footer Configs -->
       <div class="flex flex-col pl-2 gap-2">
           <h1 class="text-2xl text-black italic">Footer Configs :</h1>
-        <div class="flex gap-2">
-          <label for="footerCopyright">Copyright Message:</label>
-          <input
-            type="text"
-            id="footerCopyright"
-            class="rounded-md border-black border-1 text-center px-4"
-            placeholder="© 2025 All Rights Reserved"
-          />
-        </div>
+          <div class="flex flex-col gap-2">
+            <h1>Adicionar Colunas: </h1>
+            <div class="flex gap-2">
+              <label for="footerColumnTitle">Titulo da Coluna</label>
+              <input type="text" id="footerColumnTitle" maxlength="20" placeholder="Titulo da Coluna" class="border-black border-1 rounded-full text-center">
+              <button class="px-4 py-2 text-center rounded-md border-1 cursor-pointer">Adicionar Coluna</button>
+            </div>
+            <h1>Adicionar SubElementos: </h1>
+            <label for="footerSelect">Selecionar Coluna</label>
+            <select name="footerSelect" id="footerSelect" class="border-black border-1 rounded-full">
+
+            </select>
+          </div>
+          <hr>
       </div>
       <!-- Export Page -->
       <div class="flex flex-col pl-2 gap-2">
@@ -154,14 +166,14 @@
       </div>
     </section>
     <section id="generatedPage"
-    class="border-1 w-full px-2 my-3 rounded-md flex flex-col gap-3">
+    class="border-1 w-full px-0 my-3 rounded-md flex flex-col gap-3">
     <section id="generatedHeader"
     class="flex gap-3 w-full">
     </section>
     <section id="generatedMenu"></section>
     <section id="generatedGallery"></section>
     <section id="generatedForm"></section>
-    <section id="generatedFooter" class="mt-auto"></section>
+    <section id="generatedFooter" class="mt-auto flex gap-3 justify-evenly"></section>
     </section>
   </body>
 </html>

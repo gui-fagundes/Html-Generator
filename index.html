@@ -4,22 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./src/css/output.css" rel="stylesheet" />
-    <script src="./src/js/main.js" defer></script>
+    <script type="module" src="./src/js/main.js" defer></script>
     <title>Gerador HTML</title>
   </head>
-  <body class="px-4 flex flex-col md:flex-row max-w-screen content-center justify-between gap-2">
+  <body
+    class="px-4 flex flex-col md:flex-row max-w-screen content-center justify-between gap-2"
+  >
     <section
-      class="flex flex-col justify-evenly content-evenly my-3 gap-6 px-4 py-4 border-1  rounded-md"
+      class="flex flex-col justify-evenly content-evenly my-3 gap-6 px-4 py-4 border-1 rounded-md"
       id="pageConfigs"
     >
-    <!-- Body Configs -->
-     <div class="flex flex-col pl-2 gap-2">
-      <h1 class="text-2xl text-black italic">Body Configs :</h1>
-      <div class="flex gap-2">
-        <label for="bodyBgColor">Page Background</label>
-        <input type="color" id="bodyBgColor" value="#FFFFFF" class="">
+      <!-- Body Configs -->
+      <div class="flex flex-col pl-2 gap-2">
+        <h1 class="text-2xl text-black italic">Body Configs :</h1>
+        <div class="flex gap-2">
+          <label for="bodyBgColor">Page Background</label>
+          <input type="color" id="bodyBgColor" value="#FFFFFF" class="" />
+        </div>
       </div>
-     </div>
       <!-- Header Configs -->
       <div class="flex flex-col pl-2 gap-2">
         <h1 class="text-2xl text-black italic">Header Configs :</h1>
@@ -47,13 +49,9 @@
             class="cursor-pointer rounded-md border-1 border-black font-bold py-2 px-4 text-sm text-center"
             >Icon upload</label
           >
-          <input
-            type="file"
-            id="headerIcon"
-            class="invisible"
-          />
+          <input type="file" id="headerIcon" class="invisible" />
         </div>
-        <hr>
+        <hr />
       </div>
       <!-- Menu Configs -->
       <div class="flex flex-col pl-2 gap-2">
@@ -74,7 +72,7 @@
           <label for="menuLinkColor">Menu Links Color</label>
           <input type="color" id="menuLinkColor" value="#000000" class="" />
         </div>
-        <hr>
+        <hr />
       </div>
       <!-- Gallery Configs -->
       <div class="flex flex-col pl-2 gap-2">
@@ -89,7 +87,7 @@
             <input type="file" id="galleryImage" class="invisible" />
           </div>
         </div>
-        <hr>
+        <hr />
       </div>
 
       <!-- Form Configs -->
@@ -105,31 +103,30 @@
           />
         </div>
         <div class="flex flex-col gap-2">
-          <h1>Form Input: </h1>
+          <h1>Form Input:</h1>
           <div class="flex gap-2">
-          <select
-            name="Input Type"
-            id="formInputType"
-            class="border-black border-1 rounded-md px-4 text-center cursor-pointer"
-          >
-            <option value="text">Text</option>
-            <option value="checkbox">Checkbox</option>
-            <option value="date">Date</option>
-            <option value="email">Email</option>
-          </select>
-          <input
-            type="text"
-            id="formInputTitle"
-            class="border-1 border-black rounded-full px-10 text-center"
-            placeholder="Label do input"
-          />
-          <button
-            class="cursor-pointer border-black border-1 rounded-md px-4 text-center"
-          >
-            Add Input
-          </button>            
+            <select
+              name="Input Type"
+              id="formInputType"
+              class="border-black border-1 rounded-md px-4 text-center cursor-pointer"
+            >
+              <option value="text">Text</option>
+              <option value="checkbox">Checkbox</option>
+              <option value="date">Date</option>
+              <option value="email">Email</option>
+            </select>
+            <input
+              type="text"
+              id="formInputTitle"
+              class="border-1 border-black rounded-full px-10 text-center"
+              placeholder="Label do input"
+            />
+            <button
+              class="cursor-pointer border-black border-1 rounded-md px-4 text-center"
+            >
+              Add Input
+            </button>
           </div>
-
         </div>
         <div class="flex gap-2 justify-center">
           <button
@@ -139,48 +136,105 @@
             Add Submit Button
           </button>
         </div>
-        <hr>
+        <hr />
       </div>
+      <!-- API Calls -->
+      <div class="flex flex-col pl-2 gap-2">
+        <h1 class="text-2xl text-black italic">API Calls :</h1>
+        <div class="flex gap-2 items-center">
+          <label for="cepInput">CEP:</label>
+          <input
+            type="text"
+            id="cepInput"
+            maxlength="9"
+            placeholder="Digite o CEP"
+            class="border-1 border-black rounded-full px-4"
+          />
+          <button
+            id="buscarCepBtn"
+            class="border-1 border-black px-4 rounded-md cursor-pointer"
+          >
+            Buscar
+          </button>
+        </div>
+        <hr />
+      </div>
+
       <!-- Footer Configs -->
       <div class="flex flex-col pl-2 gap-2">
-          <h1 class="text-2xl text-black italic">Footer Configs :</h1>
-          <div class="flex flex-col gap-2">
-            <h1>Adicionar Colunas: </h1>
-            <div class="flex gap-2">
-              <label for="footerColumnTitle">Titulo da Coluna</label>
-              <input type="text" id="footerColumnTitle" maxlength="20" placeholder="Titulo da Coluna" class="border-black border-1 rounded-full text-center">
-              <button class="px-4 py-2 text-center rounded-md border-1 cursor-pointer">Adicionar Coluna</button>
-            </div>
-            <h1>Adicionar SubElementos: </h1>
-            <label for="footerSelect">Selecionar Coluna</label>
-            <select name="footerSelect" id="footerSelect" class="border-black border-1 rounded-full">
-
-            </select>
+        <h1 class="text-2xl text-black italic">Footer Configs :</h1>
+        <div class="flex flex-col gap-2">
+          <h1>Adicionar Colunas:</h1>
+          <div class="flex gap-2">
+            <label for="footerColumnTitle">Titulo da Coluna</label>
+            <input
+              type="text"
+              id="footerColumnTitle"
+              maxlength="20"
+              placeholder="Titulo da Coluna"
+              class="border-black border-1 rounded-full text-center"
+            />
+            <button
+              class="px-4 py-2 text-center rounded-md border-1 cursor-pointer"
+            >
+              Adicionar Coluna
+            </button>
           </div>
-          <hr>
+          <h1>Adicionar SubElementos:</h1>
+          <label for="footerSelect">Selecionar Coluna</label>
+          <select
+            name="footerSelect"
+            id="footerSelect"
+            class="border-black border-1 rounded-full"
+          ></select>
+        </div>
+        <hr />
       </div>
       <!-- Export Page -->
       <div class="flex flex-col pl-2 gap-2">
         <h1 class="text-2xl text-black italic">Exports / LocalStorage :</h1>
-        <button class="px-4 rounded-md border-1 border-black cursor-pointer" onclick=exportGeneratedPage() >Export Generated Page</button>
+        <button
+          class="px-4 rounded-md border-1 border-black cursor-pointer"
+          onclick="exportGeneratedPage()"
+        >
+          Export Generated Page
+        </button>
 
         <div class="flex gap-2">
-          <button id="saveLocal" class="border-1 border-black cursor-pointer rounded-md px-2">Salvar em LocalStorage</button>
-          <button id="loadLocal" class="border-1 border-black cursor-pointer rounded-md px-2">Carregar LocalStorage</button>
-          <button id="clearLocal" class="border-1 border-black cursor-pointer rounded-md px-2">Limpar LocalStorage</button>
+          <button
+            id="saveLocal"
+            class="border-1 border-black cursor-pointer rounded-md px-2"
+          >
+            Salvar em LocalStorage
+          </button>
+          <button
+            id="loadLocal"
+            class="border-1 border-black cursor-pointer rounded-md px-2"
+          >
+            Carregar LocalStorage
+          </button>
+          <button
+            id="clearLocal"
+            class="border-1 border-black cursor-pointer rounded-md px-2"
+          >
+            Limpar LocalStorage
+          </button>
         </div>
       </div>
-
     </section>
-    <section id="generatedPage"
-    class="border-1 w-full px-0 my-3 rounded-md flex flex-col gap-3">
-    <section id="generatedHeader"
-    class="flex gap-3 w-full">
-    </section>
-    <section id="generatedMenu"></section>
-    <section id="generatedGallery"></section>
-    <section id="generatedForm"></section>
-    <section id="generatedFooter" class="mt-auto flex gap-3 justify-evenly"></section>
+    <section
+      id="generatedPage"
+      class="border-1 w-full px-0 my-3 rounded-md flex flex-col gap-3"
+    >
+      <section id="generatedHeader" class="flex gap-3 w-full"></section>
+      <section id="generatedMenu"></section>
+      <section id="generatedGallery"></section>
+      <section id="generatedForm"></section>
+      <section id="generatedAPIcalls"></section>
+      <section
+        id="generatedFooter"
+        class="mt-auto flex gap-3 justify-evenly"
+      ></section>
     </section>
   </body>
 </html>

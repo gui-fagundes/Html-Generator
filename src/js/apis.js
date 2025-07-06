@@ -33,7 +33,7 @@ export async function buscarCep() {
       return;
     }
 
-    const container = document.getElementById("generatedAPIcalls");
+    const container = document.getElementById("generatedCEPcall");
     if (!container) return;
 
     container.innerHTML = `

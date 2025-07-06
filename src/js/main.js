@@ -26,7 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
   updatePageBackground();
 });
 
-function updatePageBackground() {
+export function updatePageBackground() {
+  document.querySelector("#bodyBgColor")?.addEventListener("input", updatePageBackground);
   const color = document.querySelector("#bodyBgColor").value;
   const page = document.querySelector("#generatedPage");
   page.style.backgroundColor = color;

@@ -28,3 +28,20 @@ export function buscarCep() {
     })
     .catch(() => alert("Erro ao buscar CEP."));
 }
+
+export async function consultarAPIS() {
+  const apicalls = [];
+  await fetch("https://dummyjson.com/ip")
+    .then((res) => res.json())
+    .then(apicalls.push(res));
+
+  await fetch("https://economia.awesomeapi.com.br/last/USD-BRL")
+    .then((res) => res.json())
+    .then(apicalls.push(res));
+
+  await fetch("https://jsonplaceholder.typicode.com/todos/1")
+    .then((response) => response.json())
+    .then(apicalls.push(response));
+
+  return apicalls;
+}
